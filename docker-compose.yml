@@ -1,0 +1,18 @@
+{
+  version: 3.8,
+  services: {
+    api: {
+      build: .,
+      image: se-sa-performance-hub-api,
+      container_name: se-sa-performance-hub-api,
+      working_dir: /app/api,
+      volumes: [
+        ./api:/app/api
+      ],
+      command: npm start,
+      ports: [
+        4101:4101
+      ]
+    }
+  }
+}
