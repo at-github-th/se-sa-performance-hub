@@ -14,7 +14,7 @@
   <body>
     <h1>SE/SA Performance Hub – Web</h1>
     <div class="card">
-      <p><strong>API base:</strong> http://localhost:4101</p>
+      <p><strong>API base:</strong> http://127.0.0.1:5101</p>
       <button onclick="ping()">Ping API</button>
       <button onclick="example()">Run Example Fetch</button>
       <pre id="out">Click a button…</pre>
@@ -22,12 +22,12 @@
     <script>
       const out = document.getElementById('out');
       async function ping() {
-        const r = await fetch('http://localhost:4101/');
+        const r = await fetch('http://127.0.0.1:5101/');
         out.textContent = JSON.stringify(await r.json(), null, 2);
       }
       async function example() {
         try {
-          const r = await fetch('http://localhost:4101/api');
+          const r = await fetch('http://127.0.0.1:5101/api/kpis');
           out.textContent = 'Try GET specific endpoint like /api/kpis, /api/devices, /api/resources based on this project.';
         } catch(e) {
           out.textContent = String(e);
