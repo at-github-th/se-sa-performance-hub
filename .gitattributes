@@ -1,4 +1,3 @@
-api/** linguist-vendored
 web/** linguist-vendored
 mobile/** linguist-vendored
 sdk/** linguist-vendored
