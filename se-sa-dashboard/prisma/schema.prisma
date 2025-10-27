@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Opportunity {
+  id           String   @id        // SF 18-char or cuid for manual
+  name         String
+  accountName  String?
+  stageName    String
+  amount       Float?
+  closeDate    DateTime?
+  ownerEmail   String?
+  probability  Float?
+  type         String?
+  region       String?
+  industry     String?
+  source       String   @default("manual")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  client      String?
+  status      ProjectStatus @default(PLANNING)
+  category    String?
+  description String?
+  links       Json?
+  startedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  BLOCKED
+  DONE
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String
+  area      String
+  level     Int
+  evidence  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Activity {
+  id               String   @id @default(cuid())
+  kind             String
+  title            String
+  date             DateTime
+  relatedOppId     String?
+  relatedProjectId String?
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model KpiSnapshot {
+  id               String   @id @default(cuid())
+  period           DateTime
+  winRate          Float?
+  pipelineCoverage Float?
+  cycleTimeDays    Float?
+  seLoadIndex      Float?
+  skillsIndex      Float?
+}
