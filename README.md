@@ -59,3 +59,6 @@ git push -u origin main
 - Replace mocked data with real integrations.
 - Harden auth, validation, and logging.
 - Add tests and CI.
+
+---
+**Backend:** upgraded to native; see `api/README.md` for run steps.
