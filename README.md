@@ -1,16 +1,18 @@
-# SE/SA Performance Hub — Native Backend (RUST)
+# SE/SA Performance Hub
 
-This repo provides a **language-native backend** on port **5101**, with minimal **web** and **mobile** clients and a tiny **SDK**.
+**Stack:** Rust (axum)  
+**API:** http://127.0.0.1:5101  
+**Web:** http://localhost:5501
 
-## Run
-See `api/README.md` for language-specific steps, then:
-- Web: open `web/index.html` via a static server
-- Mobile: `cd mobile && npm install && npm run start` (Android emulator uses `10.0.2.2:5101`)
+## Run (local)
 
-## Endpoints
-Project-specific routes are implemented in the backend (see `api/`). Try typical paths like:
-- `/api/kpis`, `/api/opps`, `/api/notes`
-- `/api/devices`, `/api/heartbeats`
-- `/api/resources`, `/api/availability`, `/api/book`
-- `/api/payments/create`, `/api/webhooks`
-- `/api/ingest`, `/api/dash/summary`
+### API
+cd se-sa-performance-hub-native/api && cargo run
+
+### Web (static tester)
+cd se-sa-performance-hub-native/web && python3 -m http.server 5501
+
+## Test
+- **Ping:** curl -s http://127.0.0.1:5101 | jq .
+- **KPIs:** GET /api/kpis\n- **Health:** GET /health
+
