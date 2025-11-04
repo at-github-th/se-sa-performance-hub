@@ -1,16 +1,11 @@
-<!doctype html><meta charset="utf-8"/>
-<title>SE/SA Performance Hub – Web</title>
-<style>body{font-family:system-ui;margin:24px}.card{border:1px solid #eee;border-radius:12px;padding:16px;max-width:520px}</style>
-<div class="card">
-  <h2>SE/SA Performance Hub – Web</h2>
-  <p><b>API base:</b> http://127.0.0.1:5101</p>
-  <button onclick="ping()">Ping API</button>
-  <button onclick="ex()">Run Example Fetch</button>
-  <pre id="out">Click a button…</pre>
-</div>
+<!doctype html><meta charset="utf-8"><title>se-sa-performance-hub-native demo</title>
+<style>body{font-family:system-ui,Arial;margin:24px;max-width:900px}.row{display:flex;gap:8px;margin:8px 0}button{padding:8px 12px}pre{background:#111;color:#0f0;padding:12px;min-height:120px;white-space:pre-wrap}</style>
+<h1>se-sa-performance-hub-native web tester</h1>
+<div class="row"><label>API base</label><input id="base" size="40" value="http://127.0.0.1:5101"><button onclick="ping()">Ping</button><button onclick="ex()">Run Example</button></div>
+<pre id="out">Click a button…</pre>
 <script>
-const base="http://127.0.0.1:5101";
-const out=document.getElementById("out");
-async function ping(){ try{ const r=await fetch(base,{mode:"cors"}); out.textContent=JSON.stringify(await r.json(),null,2);}catch(e){ out.textContent=String(e);} }
-async function ex(){ try{ const r=await fetch(base+"/api",{mode:"cors"}); out.textContent=(r.ok? "Use real endpoints (see README)" : r.status+" "+r.statusText); }catch(e){ out.textContent=String(e);} }
+const out=document.getElementById('out');
+function base(){return document.getElementById('base').value}
+async function ping(){try{const r=await fetch(base()); out.textContent=JSON.stringify(await r.json(),null,2);}catch(e){out.textContent=String(e)}}
+async function ex(){out.textContent="Try /api endpoints for this app"}
 </script>
