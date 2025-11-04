@@ -1,9 +1,16 @@
-# De-noise web assets so they don't dominate language stats
-web/* linguist-vendored
+# Ignore noisy assets so backend code dominates
+web/** linguist-vendored
+mobile/** linguist-vendored
+sdk/** linguist-vendored
+node_modules/** linguist-vendored
+dist/** linguist-vendored
+build/** linguist-vendored
+target/** linguist-vendored
+Makefile linguist-vendored
 *.map linguist-vendored
 *.min.* linguist-vendored
 
-# Strong language hints for real source
+# Force correct language per file type
 *.rs   linguist-language=Rust
 *.go   linguist-language=Go
 *.ts   linguist-language=TypeScript
