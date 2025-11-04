@@ -1,15 +1,16 @@
-# De-noise web assets
+# De-noise web assets so they don't dominate language stats
 web/* linguist-vendored
 *.map linguist-vendored
 *.min.* linguist-vendored
-# Strong language hints
-*.rs linguist-language=Rust
-*.go linguist-language=Go
-*.ts linguist-language=TypeScript
-*.tsx linguist-language=TypeScript
-*.js linguist-language=JavaScript
+
+# Strong language hints for real source
+*.rs   linguist-language=Rust
+*.go   linguist-language=Go
+*.ts   linguist-language=TypeScript
+*.tsx  linguist-language=TypeScript
+*.js   linguist-language=JavaScript
 *.java linguist-language=Java
-*.py linguist-language=Python
+*.py   linguist-language=Python
 *.html linguist-language=HTML
-*.ex *.exs linguist-language=Elixir
-Makefile linguist-vendored
+*.ex   linguist-language=Elixir
+*.exs  linguist-language=Elixir
