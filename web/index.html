@@ -1,11 +1,51 @@
-<!doctype html><meta charset="utf-8"><title>se-sa-performance-hub-native demo</title>
-<style>body{font-family:system-ui,Arial;margin:24px;max-width:900px}.row{display:flex;gap:8px;margin:8px 0}button{padding:8px 12px}pre{background:#111;color:#0f0;padding:12px;min-height:120px;white-space:pre-wrap}</style>
-<h1>se-sa-performance-hub-native web tester</h1>
-<div class="row"><label>API base</label><input id="base" size="40" value="http://127.0.0.1:5101"><button onclick="ping()">Ping</button><button onclick="ex()">Run Example</button></div>
-<pre id="out">Click a button…</pre>
+<!doctype html><html><head><meta charset="utf-8"/>
+<title>SE/SA Performance Hub • KPIs</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+  body{font-family:system-ui;margin:24px;background:#0f172a;color:#e2e8f0}
+  header{display:flex;align-items:center;gap:12px}
+  .chip{background:#1f2937;color:#93c5fd;border:1px solid #334155;border-radius:999px;padding:4px 10px;font-size:12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#111827;border:1px solid #374151;border-radius:12px;padding:14px}
+  .num{font-size:28px;font-weight:700}
+  button{background:#22c55e;border:0;border-radius:8px;padding:8px 12px;color:#052e16;cursor:pointer}
+  pre{background:#0b1220;border:1px solid #1f2937;border-radius:8px;padding:10px;overflow:auto}
+</style></head><body>
+<header>
+  <h1>SE/SA Performance Hub</h1>
+  <span class="chip">Rust • Axum • :5101</span>
+  <button id="refresh">Refresh KPIs</button>
+</header>
+
+<section class="grid" id="kpis"></section>
+<h3>Raw</h3>
+<pre id="out">Ready.</pre>
+
 <script>
+const BASE="http://127.0.0.1:5101";
 const out=document.getElementById('out');
-function base(){return document.getElementById('base').value}
-async function ping(){try{const r=await fetch(base()); out.textContent=JSON.stringify(await r.json(),null,2);}catch(e){out.textContent=String(e)}}
-async function ex(){out.textContent="Try /api endpoints for this app"}
-</script>
+const kpisEl=document.getElementById('kpis');
+async function load(){
+  const meta=await fetch(BASE).then(r=>r.json());
+  const k=await fetch(BASE+"/api/kpis").then(r=>r.json()).catch(()=>[]);
+  out.textContent=JSON.stringify({meta,k},null,2);
+  kpisEl.innerHTML=k.map(x=>`
+    <div class="card">
+      <div>${x.name}</div>
+      <div class="num">${x.value}${x.unit||""}</div>
+      ${x.target!=null?`<small>Target: ${x.target}</small>`:""}
+      <div style="margin-top:8px">
+        <button onclick="bump(${x.id||0})">+0.01</button>
+      </div>
+    </div>
+  `).join("");
+}
+async function bump(id){
+  try{
+    const r=await fetch(BASE+"/api/kpis/"+id,{method:"PATCH",headers:{"content-type":"application/json"},body:JSON.stringify({value:Math.random().toFixed(2)})});
+    await load();
+  }catch(e){ out.textContent=String(e); }
+}
+document.getElementById('refresh').onclick=load;
+load();
+</script></body></html>
